@@ -1,1 +1,6 @@
 api_view is python decorator which converts your python functions into an API View. It modifies function behaviour so that it can handle all the APi responses Views.
+Serializers =>
+    Serializers are used to convert complex data types, such as Django model instances, into Python data types that can be easily rendered into JSON, XML, or other content types.
+    Serializers also provide deserialization, allowing parsed data to be converted back into complex types after first validating the incoming data.
+    Serializers in Django are a part of the Django REST framework, a powerful and flexible toolkit for building Web APIs.
+    The two major serializers that are most popularly used are ModelSerializer and HyperLinkedModelSerialzer.
