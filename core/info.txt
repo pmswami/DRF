@@ -1,0 +1,1 @@
+api_view is python decorator which converts your python functions into an API View. It modifies function behaviour so that it can handle all the APi responses Views.
