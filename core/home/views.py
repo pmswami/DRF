@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import viewsets
 
 from .models import Person
 from .serializers import PeopleSerializer, LoginSerializer
@@ -123,3 +124,18 @@ class PersonAPI(APIView):
         obj.delete()
         return Response({"message":"person deleted"})
         # return Response({"message": "this is a delete method"})
+
+
+class PeopleViewSet(viewsets.ModelViewSet):
+    serializer_class = PeopleSerializer
+    queryset = Person.objects.all()
+
+    def list(self, request):
+        search = request.GET.get("search")
+        print(search)
+        queryset = self.queryset
+        if search:
+            queryset = queryset.filter(name__startswith=search)
+        serializer = PeopleSerializer(queryset, many=True)
+        return Response({"status": 200, "data": serializer.data})
+        return Response({"status": 200})
