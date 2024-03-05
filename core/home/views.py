@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Person
 from .serializers import PeopleSerializer, LoginSerializer
@@ -77,3 +78,48 @@ def login(request):
         print(data)
         return Response({"message": "success"})
     return Response(serializer.errors)
+
+
+class PersonAPI(APIView):
+
+    def get(self, request):
+        objs = Person.objects.all()
+        serializer = PeopleSerializer(objs, many=True)
+        return Response(serializer.data)
+        # return Response({"message": "this is a get method"})
+
+    def post(self, request):
+        data = request.data
+        serializer = PeopleSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+        # return Response({"message": "this is a post method"})
+
+    def put(self, request):
+        data = request.data
+        obj = Person.objects.get(id = data["id"])
+        serializer = PeopleSerializer(obj, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+        # return Response({"message": "this is a put method"})
+
+    def patch(self, request):
+        data = request.data
+        obj = Person.objects.get(id = data["id"])
+        serializer = PeopleSerializer(obj, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+        # return Response({"message": "this is a patch method"})
+
+    def delete(self, request):
+        data = request.data
+        obj = Person.objects.get(id = data["id"])
+        obj.delete()
+        return Response({"message":"person deleted"})
+        # return Response({"message": "this is a delete method"})

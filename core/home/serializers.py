@@ -15,9 +15,9 @@ class ColorSerializer(serializers.ModelSerializer):
 class PeopleSerializer(serializers.ModelSerializer):
 
     # color = ColorSerializer(many = True)
-    color = ColorSerializer()
+    # color = ColorSerializer()
 
-    color_info = serializers.SerializerMethodField() #this method is implemented down below by name get_color_info()
+    # color_info = serializers.SerializerMethodField() #this method is implemented down below by name get_color_info()
 
     class Meta:
         model = Person

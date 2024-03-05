@@ -7,3 +7,7 @@ Serializers =>
     Serializers provide validate() method for validating inputs.
     Serializers provide serializers.SerializerMethodField() method field to define custom fields.
     serializers.Serializer ise used to write custom serializer with custom validations without model being used/attched.
+
+APIView =>
+    Using the APIView class is pretty much the same as using a regular View class, as usual, the incoming request is dispatched to an appropriate handler method such as .get() or .post()
+    Handler methods may return REST framework's Response
