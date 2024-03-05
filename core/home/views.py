@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import Person
-from .serializers import PeopleSerializer
+from .serializers import PeopleSerializer, LoginSerializer
 
 # Create your views here.
 @api_view(["GET", "POST", "PUT", "PATCH"])
@@ -65,3 +65,15 @@ def person(request):
         obj = Person.objects.get(id = data["id"])
         obj.delete()
         return Response({"message":"person deleted"})
+
+
+@api_view(["POST"])
+def login(request):
+    data= request.data
+    serializer = LoginSerializer(data = data)
+
+    if serializer.is_valid():
+        data = serializer.data
+        print(data)
+        return Response({"message": "success"})
+    return Response(serializer.errors)

@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from .models import Person, Color
 
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+
 class ColorSerializer(serializers.ModelSerializer):
 
     class Meta:

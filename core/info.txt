@@ -5,3 +5,5 @@ Serializers =>
     Serializers in Django are a part of the Django REST framework, a powerful and flexible toolkit for building Web APIs.
     The two major serializers that are most popularly used are ModelSerializer and HyperLinkedModelSerialzer.
     Serializers provide validate() method for validating inputs.
+    Serializers provide serializers.SerializerMethodField() method field to define custom fields.
+    serializers.Serializer ise used to write custom serializer with custom validations without model being used/attched.
