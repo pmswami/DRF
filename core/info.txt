@@ -7,7 +7,25 @@ Serializers =>
     Serializers provide validate() method for validating inputs.
     Serializers provide serializers.SerializerMethodField() method field to define custom fields.
     serializers.Serializer ise used to write custom serializer with custom validations without model being used/attched.
+    https://www.django-rest-framework.org/api-guide/serializers/
 
 APIView =>
     Using the APIView class is pretty much the same as using a regular View class, as usual, the incoming request is dispatched to an appropriate handler method such as .get() or .post()
     Handler methods may return REST framework's Response
+    class based View
+    https://www.django-rest-framework.org/api-guide/views/
+
+Status Codes =>
+     REST framework includes a set of named constants that you can use to make your code more obvious and readable.
+     from rest_framework import status
+    https://www.django-rest-framework.org/api-guide/status-codes/
+
+Authentication =>
+    https://www.django-rest-framework.org/api-guide/authentication/
+    Basic Authentication in Django REST Framework uses HTTP Basic Authentication.
+    The REST framework will attempt to authenticate the Basic Authentication class and set the returned values to request.user and request.auth. If successfully authenticated, BasicAuthentication provides the following credentials.
+
+    request.user will be a Django User instance.
+    request.auth will be None.
+
+    if not, the value of request.user will be set to as an instance of django.contrib.auth.models.AnonymousUser, and request.auth will be set to None.

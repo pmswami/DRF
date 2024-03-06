@@ -3,9 +3,48 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import viewsets
+from rest_framework import status
+from rest_framework import authentication
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from rest_framework.authtoken.models import Token
 
 from .models import Person
-from .serializers import PeopleSerializer, LoginSerializer
+from .serializers import PeopleSerializer, LoginSerializer, RegisterSerializer
+
+class LoginAPI(APIView):
+    def post(self, request):
+        data = request.data
+        serializer = LoginSerializer(data=data)
+        if not serializer.is_valid():
+            return Response({"status": False,"message": serializer.errors},status.HTTP_400_BAD_REQUEST)
+        user = authenticate(username=serializer.data["username"], password=serializer.data["password"])
+        if not user:
+            return Response({
+                "status": False,
+                "message": "invalid credentials or user not found"
+            }, status.HTTP_400_BAD_REQUEST)
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({
+            "status":True,
+            "message": "user login",
+            "token":str(token)
+            },
+            status=status.HTTP_200_OK
+        )
+
+class RegisterAPI(APIView):
+
+    def post(self, request):
+        data= request.data
+        serializer = RegisterSerializer(data=data)
+
+        if not serializer.is_valid():
+            return Response({"status": False,"message": serializer.errors},status.HTTP_400_BAD_REQUEST)
+            # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+        return Response({"status":True, "message": "user created"}, status=status.HTTP_200_OK)
+        # return Response(status=status.HTTP_200_OK, serializer.data)
 
 # Create your views here.
 @api_view(["GET", "POST", "PUT", "PATCH"])
@@ -137,5 +176,6 @@ class PeopleViewSet(viewsets.ModelViewSet):
         if search:
             queryset = queryset.filter(name__startswith=search)
         serializer = PeopleSerializer(queryset, many=True)
-        return Response({"status": 200, "data": serializer.data})
-        return Response({"status": 200})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        # return Response({"status": 200})
+
