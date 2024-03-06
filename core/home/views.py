@@ -185,6 +185,7 @@ class PersonAPI(APIView):
 class PeopleViewSet(viewsets.ModelViewSet):
     serializer_class = PeopleSerializer
     queryset = Person.objects.all()
+    http_method_names = ["get"] #restricts request methods. This allows only get method
 
     def list(self, request):
         search = request.GET.get("search")
