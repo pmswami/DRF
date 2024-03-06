@@ -37,3 +37,12 @@ Permissions =>
     Permissions are used to grant or deny access for different classes of users to different parts of the API.
     The simplest style of permission would be to allow access to any authenticated user, and deny access to any unauthenticated user. This corresponds to the IsAuthenticated class in REST framework.
     A slightly less strict style of permission would be to allow full access to authenticated users, but allow read-only access to unauthenticated users. This corresponds to the IsAuthenticatedOrReadOnly class in REST framework.
+
+Pagination =>
+    https://www.django-rest-framework.org/api-guide/pagination/
+    REST framework includes support for customizable pagination styles. This allows you to modify how large result sets are split into individual pages of data.
+    The pagination API can support either:
+        Pagination links that are provided as part of the content of the response.
+        Pagination links that are included in response headers, such as Content-Range or Link.
+    The built-in styles currently all use links included as part of the content of the response. This style is more accessible when using the browsable API.
+    Pagination is only performed automatically if you're using the generic views or viewsets. If you're using a regular APIView, you'll need to call into the pagination API yourself to ensure you return a paginated response.
