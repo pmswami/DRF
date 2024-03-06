@@ -8,6 +8,8 @@ from rest_framework import authentication
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 
 from .models import Person
 from .serializers import PeopleSerializer, LoginSerializer, RegisterSerializer
@@ -121,7 +123,8 @@ def login(request):
 
 
 class PersonAPI(APIView):
-
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     def get(self, request):
         objs = Person.objects.all()
         serializer = PeopleSerializer(objs, many=True)
