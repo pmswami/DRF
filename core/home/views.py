@@ -11,6 +11,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from django.core.paginator import Paginator
+from rest_framework.decorators import action
 
 from .models import Person
 from .serializers import PeopleSerializer, LoginSerializer, RegisterSerializer
@@ -195,3 +196,30 @@ class PeopleViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
         # return Response({"status": 200})
 
+
+    # detail=False to ignore details in API
+    # @action(detail=False, methods=["post"])
+    # def send_mail_to_person(self, request):
+    #     return Response({
+    #         "status": True,
+    #         "message": "email sent successfully"
+    #     })
+
+
+    # #to get details from API
+    # @action(detail=True, methods=["POST"])
+    # def send_mail_to_person(self, request, pk):
+    #     print(pk)
+    #     return Response({
+    #         "status": True,
+    #         "message": "email sent successfully"
+    #     })
+
+
+    @action(detail=True, methods=["GET"])
+    def send_mail_to_person(self, request, pk):
+        print(pk)
+        return Response({
+            "status": True,
+            "message": "email sent successfully"
+        })
